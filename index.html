@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -10,10 +9,6 @@
 <title>SCADA INDUSTRIAL | SISTEMA DE SUPERVISIÓN</title>
 
 <style>
-
-/* =========================================================
-   CONFIGURACIÓN GENERAL
-========================================================= */
 
 * {
     box-sizing: border-box;
@@ -44,10 +39,6 @@ button:disabled {
     border-color: #303a40 !important;
     cursor: not-allowed;
 }
-
-/* =========================================================
-   BARRA SUPERIOR
-========================================================= */
 
 .topbar {
     height: 70px;
@@ -140,19 +131,11 @@ button:disabled {
     color: #90a4ae;
 }
 
-/* =========================================================
-   CONTENEDOR
-========================================================= */
-
 .container {
     max-width: 1550px;
     margin: auto;
     padding: 20px;
 }
-
-/* =========================================================
-   GRID PRINCIPAL
-========================================================= */
 
 .dashboard {
     display: grid;
@@ -166,10 +149,6 @@ button:disabled {
 
     align-items: start;
 }
-
-/* =========================================================
-   PANELES
-========================================================= */
 
 .panel {
     background: rgba(13,18,21,.96);
@@ -219,10 +198,6 @@ button:disabled {
     padding: 13px;
 }
 
-/* =========================================================
-   INDICADORES
-========================================================= */
-
 .indicator {
     display: flex;
     align-items: center;
@@ -270,10 +245,6 @@ button:disabled {
     background: #ffd600;
     box-shadow: 0 0 7px rgba(255,214,0,.55);
 }
-
-/* =========================================================
-   MODO
-========================================================= */
 
 .mode-display {
     text-align: center;
@@ -348,10 +319,6 @@ button:hover:not(:disabled) {
     color: white;
 }
 
-/* =========================================================
-   SEGURIDAD
-========================================================= */
-
 .security {
     text-align: center;
     padding-top: 16px;
@@ -389,10 +356,6 @@ button:hover:not(:disabled) {
     color: #eceff1;
 }
 
-/* =========================================================
-   PROCESO
-========================================================= */
-
 .process {
     min-height: 390px;
 }
@@ -422,8 +385,6 @@ button:hover:not(:disabled) {
     overflow: hidden;
 }
 
-/* línea de proceso */
-
 .process-line {
     position: absolute;
 
@@ -439,8 +400,6 @@ button:hover:not(:disabled) {
     box-shadow:
         0 0 7px rgba(84,110,122,.3);
 }
-
-/* equipos */
 
 .machine {
     position: absolute;
@@ -491,8 +450,6 @@ button:hover:not(:disabled) {
     right: 7%;
 }
 
-/* flechas */
-
 .arrow {
     position: absolute;
 
@@ -510,10 +467,6 @@ button:hover:not(:disabled) {
 .arrow.two {
     right: 31%;
 }
-
-/* =========================================================
-   KPI
-========================================================= */
 
 .kpis {
     display: grid;
@@ -554,10 +507,6 @@ button:hover:not(:disabled) {
 
     color: #eceff1;
 }
-
-/* =========================================================
-   ACTUADORES
-========================================================= */
 
 .actuator {
     border: 1px solid #263238;
@@ -623,10 +572,6 @@ button:hover:not(:disabled) {
     color: white;
 }
 
-/* =========================================================
-   ALARMAS
-========================================================= */
-
 .alarm {
     padding: 11px;
 
@@ -660,10 +605,6 @@ button:hover:not(:disabled) {
     margin-top: 4px;
     color: #78909c;
 }
-
-/* =========================================================
-   IA
-========================================================= */
 
 .ai-status {
     padding: 11px;
@@ -710,10 +651,6 @@ button:hover:not(:disabled) {
     color: #eceff1;
     letter-spacing: .5px;
 }
-
-/* =========================================================
-   CHAT IA
-========================================================= */
 
 .chat {
     height: 190px;
@@ -807,10 +744,6 @@ button:hover:not(:disabled) {
     padding-right: 13px;
 }
 
-/* =========================================================
-   HISTORIAL
-========================================================= */
-
 .history {
     margin-top: 16px;
 }
@@ -856,10 +789,6 @@ td {
 tr:hover td {
     background: #10181c;
 }
-
-/* =========================================================
-   MODALES
-========================================================= */
 
 .modal {
     display: none;
@@ -946,10 +875,6 @@ tr:hover td {
     gap: 6px;
 }
 
-/* =========================================================
-   SCROLLBAR
-========================================================= */
-
 ::-webkit-scrollbar {
     width: 7px;
 }
@@ -966,10 +891,6 @@ tr:hover td {
 ::-webkit-scrollbar-thumb:hover {
     background: #546e7a;
 }
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
 
 @media(max-width:1150px) {
 
@@ -1019,13 +940,7 @@ tr:hover td {
 
 </head>
 
-
 <body>
-
-
-<!-- =======================================================
-     BARRA SUPERIOR
-======================================================== -->
 
 <header class="topbar">
 
@@ -1047,7 +962,6 @@ tr:hover td {
 
     </div>
 
-
     <div class="top-status">
 
         <div class="system-status">
@@ -1063,7 +977,6 @@ tr:hover td {
 
         </div>
 
-
         <div class="user-box">
             OPERADOR
         </div>
@@ -1072,20 +985,11 @@ tr:hover td {
 
 </header>
 
-
 <div class="container">
 
 <div class="dashboard">
 
-
-<!-- =======================================================
-     COLUMNA IZQUIERDA
-======================================================== -->
-
 <div>
-
-
-<!-- COMUNICACIÓN -->
 
 <div class="panel">
 
@@ -1098,7 +1002,6 @@ tr:hover td {
     </span>
 
 </div>
-
 
 <div class="panel-body">
 
@@ -1121,7 +1024,6 @@ tr:hover td {
 
     </div>
 
-
     <div class="indicator">
 
         <div class="indicator-left">
@@ -1137,7 +1039,6 @@ tr:hover td {
         </span>
 
     </div>
-
 
     <div class="indicator">
 
@@ -1159,11 +1060,7 @@ tr:hover td {
 
 </div>
 
-
 <br>
-
-
-<!-- MODO -->
 
 <div class="panel">
 
@@ -1177,9 +1074,7 @@ tr:hover td {
 
 </div>
 
-
 <div class="panel-body">
-
 
 <div class="mode-display">
 
@@ -1197,7 +1092,6 @@ tr:hover td {
 
 </div>
 
-
 <div class="mode-buttons">
 
 <button
@@ -1208,7 +1102,6 @@ tr:hover td {
     LOCAL
 
 </button>
-
 
 <button
     id="btnRemoto"
@@ -1225,11 +1118,7 @@ tr:hover td {
 
 </div>
 
-
 <br>
-
-
-<!-- SEGURIDAD -->
 
 <div class="panel">
 
@@ -1243,9 +1132,7 @@ tr:hover td {
 
 </div>
 
-
 <div class="panel-body security">
-
 
 <div
     id="candado"
@@ -1255,7 +1142,6 @@ tr:hover td {
 
 </div>
 
-
 <div
     id="estadoSeguridad"
     class="security-state security-locked">
@@ -1263,7 +1149,6 @@ tr:hover td {
     ACCESO BLOQUEADO
 
 </div>
-
 
 <button
     id="btnCandado"
@@ -1278,18 +1163,9 @@ tr:hover td {
 
 </div>
 
-
 </div>
 
-
-<!-- =======================================================
-     COLUMNA CENTRAL
-======================================================== -->
-
 <div>
-
-
-<!-- PROCESO -->
 
 <div class="panel process">
 
@@ -1303,14 +1179,11 @@ tr:hover td {
 
 </div>
 
-
 <div class="panel-body">
 
 <div class="process-area">
 
-
 <div class="process-line"></div>
-
 
 <div class="machine servo">
 
@@ -1328,16 +1201,13 @@ tr:hover td {
 
 </div>
 
-
 <div class="arrow one">
     →
 </div>
 
-
 <div class="arrow two">
     →
 </div>
-
 
 <div class="machine led">
 
@@ -1355,12 +1225,9 @@ tr:hover td {
 
 </div>
 
-
 </div>
 
-
 <div class="kpis">
-
 
 <div class="kpi">
 
@@ -1378,7 +1245,6 @@ tr:hover td {
 
 </div>
 
-
 <div class="kpi">
 
 <div class="kpi-title">
@@ -1394,7 +1260,6 @@ tr:hover td {
 </div>
 
 </div>
-
 
 <div class="kpi">
 
@@ -1412,18 +1277,13 @@ tr:hover td {
 
 </div>
 
-
 </div>
 
 </div>
 
 </div>
-
 
 <br>
-
-
-<!-- ACTUADORES -->
 
 <div class="panel">
 
@@ -1437,9 +1297,7 @@ tr:hover td {
 
 </div>
 
-
 <div class="panel-body">
-
 
 <div class="actuator">
 
@@ -1448,7 +1306,6 @@ tr:hover td {
 </div>
 
 <div class="actuator-body">
-
 
 <div class="actuator-state">
 
@@ -1464,7 +1321,6 @@ tr:hover td {
 </span>
 
 </div>
-
 
 <div class="actuator-buttons">
 
@@ -1492,7 +1348,6 @@ tr:hover td {
 
 </div>
 
-
 <div class="actuator">
 
 <div class="actuator-head">
@@ -1500,7 +1355,6 @@ tr:hover td {
 </div>
 
 <div class="actuator-body">
-
 
 <div class="actuator-state">
 
@@ -1516,7 +1370,6 @@ tr:hover td {
 </span>
 
 </div>
-
 
 <div class="actuator-buttons">
 
@@ -1544,13 +1397,9 @@ tr:hover td {
 
 </div>
 
-
 </div>
 
 </div>
-
-
-<!-- HISTORIAL -->
 
 <div class="panel history">
 
@@ -1563,7 +1412,6 @@ tr:hover td {
     </span>
 
 </div>
-
 
 <div class="panel-body history-container">
 
@@ -1584,7 +1432,6 @@ tr:hover td {
 
 </thead>
 
-
 <tbody id="historialBody">
 </tbody>
 
@@ -1594,18 +1441,9 @@ tr:hover td {
 
 </div>
 
-
 </div>
 
-
-<!-- =======================================================
-     COLUMNA DERECHA
-======================================================== -->
-
 <div>
-
-
-<!-- ALARMAS -->
 
 <div class="panel">
 
@@ -1618,7 +1456,6 @@ tr:hover td {
     </span>
 
 </div>
-
 
 <div class="panel-body">
 
@@ -1644,11 +1481,7 @@ tr:hover td {
 
 </div>
 
-
 <br>
-
-
-<!-- IA -->
 
 <div class="panel">
 
@@ -1662,12 +1495,9 @@ tr:hover td {
 
 </div>
 
-
 <div class="panel-body">
 
-
 <div class="ai-status">
-
 
 <div class="ai-row">
 
@@ -1685,7 +1515,6 @@ tr:hover td {
 
 </div>
 
-
 <div class="ai-row">
 
 <span>
@@ -1701,7 +1530,6 @@ tr:hover td {
 </span>
 
 </div>
-
 
 <div class="ai-row">
 
@@ -1720,7 +1548,6 @@ tr:hover td {
 </div>
 
 </div>
-
 
 <div class="ai-diagnosis">
 
@@ -1756,11 +1583,7 @@ tr:hover td {
 
 </div>
 
-
 <br>
-
-
-<!-- CHAT IA -->
 
 <div class="panel">
 
@@ -1774,9 +1597,7 @@ tr:hover td {
 
 </div>
 
-
 <div class="panel-body">
-
 
 <div
     id="chatBox"
@@ -1791,7 +1612,6 @@ Podés consultar información sobre el proceso, estados, ciclos, tiempos y funci
 
 </div>
 
-
 <div class="chat-input">
 
 <input
@@ -1799,7 +1619,6 @@ Podés consultar información sobre el proceso, estados, ciclos, tiempos y funci
     id="pregunta"
     placeholder="Escribí una pregunta..."
     onkeydown="if(event.key==='Enter') preguntarIA()">
-
 
 <button
     class="btn-send"
@@ -1815,18 +1634,11 @@ Podés consultar información sobre el proceso, estados, ciclos, tiempos y funci
 
 </div>
 
-
-</div>
-
-
 </div>
 
 </div>
 
-
-<!-- =======================================================
-     MODAL CREAR CONTRASEÑA
-======================================================== -->
+</div>
 
 <div
     id="modalCrear"
@@ -1847,7 +1659,6 @@ Podés consultar información sobre el proceso, estados, ciclos, tiempos y funci
     id="nuevaContrasena"
     placeholder="Nueva contraseña">
 
-
 <div class="modal-buttons">
 
 <button
@@ -1857,7 +1668,6 @@ Podés consultar información sobre el proceso, estados, ciclos, tiempos y funci
     CANCELAR
 
 </button>
-
 
 <button
     class="btn-on"
@@ -1872,11 +1682,6 @@ Podés consultar información sobre el proceso, estados, ciclos, tiempos y funci
 </div>
 
 </div>
-
-
-<!-- =======================================================
-     MODAL ACCESO
-======================================================== -->
 
 <div
     id="modalAcceso"
@@ -1897,7 +1702,6 @@ Podés consultar información sobre el proceso, estados, ciclos, tiempos y funci
     id="contrasena"
     placeholder="Contraseña">
 
-
 <div class="modal-buttons">
 
 <button
@@ -1907,7 +1711,6 @@ Podés consultar información sobre el proceso, estados, ciclos, tiempos y funci
     CANCELAR
 
 </button>
-
 
 <button
     class="btn-on"
@@ -1925,6 +1728,42 @@ Podés consultar información sobre el proceso, estados, ciclos, tiempos y funci
 
 
 <script>
+
+/* =========================================================
+   CONEXIÓN CON PYTHON / FLASK
+========================================================= */
+
+// ESTA ES LA ÚNICA DIRECCIÓN QUE VAMOS A CAMBIAR
+// CUANDO CREAMOS EL TÚNEL.
+//
+// NO PONGAS NADA MÁS POR AHORA.
+
+const API_BASE = "https://TU-TUNEL";
+
+
+/*
+   Función central de comunicación.
+
+   GitHub Pages
+        ↓
+   API_BASE
+        ↓
+   Túnel HTTPS
+        ↓
+   Flask
+        ↓
+   Arduino
+*/
+
+function api(url, options = {}) {
+
+    return fetch(
+        `${API_BASE}${url}`,
+        options
+    );
+
+}
+
 
 /* =========================================================
    VARIABLES
@@ -2008,46 +1847,63 @@ function actualizarInterfazSeguridad() {
 
 async function gestionarCandado() {
 
-    const respuesta =
-        await fetch("/datos");
+    try {
 
-    const datos =
-        await respuesta.json();
+        const respuesta =
+            await api("/datos");
 
-
-    if (!datos.contrasena_creada) {
-
-        abrirModal("modalCrear");
-
-        return;
-
-    }
+        const datos =
+            await respuesta.json();
 
 
-    if (!datos.acceso_autorizado) {
+        if (!datos.contrasena_creada) {
 
-        abrirModal("modalAcceso");
+            abrirModal("modalCrear");
 
-        return;
+            return;
 
-    }
-
-
-    await fetch(
-        "/cerrar_acceso",
-        {
-            method: "POST"
         }
-    );
 
 
-    accesoAutorizado = false;
+        if (!datos.acceso_autorizado) {
 
-    modoForzado = false;
+            abrirModal("modalAcceso");
 
-    actualizarInterfazSeguridad();
+            return;
 
-    actualizarDatos();
+        }
+
+
+        await api(
+            "/cerrar_acceso",
+            {
+                method: "POST"
+            }
+        );
+
+
+        accesoAutorizado = false;
+
+        modoForzado = false;
+
+        actualizarInterfazSeguridad();
+
+        actualizarDatos();
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "Error candado:",
+            error
+        );
+
+        alert(
+            "No se pudo comunicar con el servidor."
+        );
+
+    }
 
 }
 
@@ -2075,46 +1931,60 @@ async function crearContrasena() {
     }
 
 
-    const respuesta =
-        await fetch(
-            "/crear_contrasena",
-            {
-                method: "POST",
+    try {
 
-                headers: {
-                    "Content-Type":
-                        "application/json"
-                },
+        const respuesta =
+            await api(
+                "/crear_contrasena",
+                {
+                    method: "POST",
 
-                body: JSON.stringify({
-                    contrasena: password
-                })
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
 
-            }
-        );
+                    body: JSON.stringify({
+                        contrasena: password
+                    })
 
-
-    const datos =
-        await respuesta.json();
+                }
+            );
 
 
-    if (datos.ok) {
+        const datos =
+            await respuesta.json();
 
-        alert(
-            "Contraseña creada correctamente."
-        );
 
-        cerrarModal("modalCrear");
+        if (datos.ok) {
 
-        document.getElementById(
-            "nuevaContrasena"
-        ).value = "";
+            alert(
+                "Contraseña creada correctamente."
+            );
+
+            cerrarModal("modalCrear");
+
+            document.getElementById(
+                "nuevaContrasena"
+            ).value = "";
+
+        }
+
+        else {
+
+            alert(datos.mensaje);
+
+        }
 
     }
 
-    else {
+    catch(error) {
 
-        alert(datos.mensaje);
+        console.error(error);
+
+        alert(
+            "No se pudo comunicar con el servidor."
+        );
 
     }
 
@@ -2144,52 +2014,66 @@ async function autorizar() {
     }
 
 
-    const respuesta =
-        await fetch(
-            "/autorizar",
-            {
-                method: "POST",
+    try {
 
-                headers: {
-                    "Content-Type":
-                        "application/json"
-                },
+        const respuesta =
+            await api(
+                "/autorizar",
+                {
+                    method: "POST",
 
-                body: JSON.stringify({
-                    contrasena: password
-                })
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
 
-            }
-        );
+                    body: JSON.stringify({
+                        contrasena: password
+                    })
 
-
-    const datos =
-        await respuesta.json();
+                }
+            );
 
 
-    if (datos.ok) {
+        const datos =
+            await respuesta.json();
 
-        accesoAutorizado = true;
 
-        cerrarModal("modalAcceso");
+        if (datos.ok) {
 
-        document.getElementById(
-            "contrasena"
-        ).value = "";
+            accesoAutorizado = true;
 
-        actualizarInterfazSeguridad();
+            cerrarModal("modalAcceso");
 
-        await actualizarDatos();
+            document.getElementById(
+                "contrasena"
+            ).value = "";
 
-        alert(
-            "Acceso autorizado."
-        );
+            actualizarInterfazSeguridad();
+
+            await actualizarDatos();
+
+            alert(
+                "Acceso autorizado."
+            );
+
+        }
+
+        else {
+
+            alert(datos.mensaje);
+
+        }
 
     }
 
-    else {
+    catch(error) {
 
-        alert(datos.mensaje);
+        console.error(error);
+
+        alert(
+            "No se pudo comunicar con el servidor."
+        );
 
     }
 
@@ -2214,51 +2098,65 @@ async function cambiarModo(remoto) {
     }
 
 
-    const respuesta =
-        await fetch(
-            "/modo",
-            {
-                method: "POST",
+    try {
 
-                headers: {
-                    "Content-Type":
-                        "application/json"
-                },
+        const respuesta =
+            await api(
+                "/modo",
+                {
+                    method: "POST",
 
-                body: JSON.stringify({
-                    modo: remoto
-                })
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
 
-            }
+                    body: JSON.stringify({
+                        modo: remoto
+                    })
+
+                }
+            );
+
+
+        const datos =
+            await respuesta.json();
+
+
+        if (!datos.ok) {
+
+            alert(datos.mensaje);
+
+            return;
+
+        }
+
+
+        modoForzado = remoto;
+
+
+        if (!remoto) {
+
+            accesoAutorizado = false;
+
+            actualizarInterfazSeguridad();
+
+        }
+
+
+        await actualizarDatos();
+
+    }
+
+    catch(error) {
+
+        console.error(error);
+
+        alert(
+            "No se pudo comunicar con el servidor."
         );
 
-
-    const datos =
-        await respuesta.json();
-
-
-    if (!datos.ok) {
-
-        alert(datos.mensaje);
-
-        return;
-
     }
-
-
-    modoForzado = remoto;
-
-
-    if (!remoto) {
-
-        accesoAutorizado = false;
-
-        actualizarInterfazSeguridad();
-
-    }
-
-
-    await actualizarDatos();
 
 }
 
@@ -2283,37 +2181,51 @@ async function controlServo(encender) {
     }
 
 
-    const respuesta =
-        await fetch(
-            "/control_servo",
-            {
-                method: "POST",
+    try {
 
-                headers: {
-                    "Content-Type":
-                        "application/json"
-                },
+        const respuesta =
+            await api(
+                "/control_servo",
+                {
+                    method: "POST",
 
-                body: JSON.stringify({
-                    estado: encender
-                })
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
 
-            }
-        );
+                    body: JSON.stringify({
+                        estado: encender
+                    })
 
-
-    const datos =
-        await respuesta.json();
+                }
+            );
 
 
-    if (!datos.ok) {
+        const datos =
+            await respuesta.json();
 
-        alert(datos.mensaje);
+
+        if (!datos.ok) {
+
+            alert(datos.mensaje);
+
+        }
+
+
+        await actualizarDatos();
 
     }
 
+    catch(error) {
 
-    await actualizarDatos();
+        console.error(error);
+
+        alert(
+            "No se pudo comunicar con el servidor."
+        );
+
+    }
 
 }
 
@@ -2338,37 +2250,51 @@ async function controlLed(encender) {
     }
 
 
-    const respuesta =
-        await fetch(
-            "/control_led",
-            {
-                method: "POST",
+    try {
 
-                headers: {
-                    "Content-Type":
-                        "application/json"
-                },
+        const respuesta =
+            await api(
+                "/control_led",
+                {
+                    method: "POST",
 
-                body: JSON.stringify({
-                    estado: encender
-                })
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
 
-            }
-        );
+                    body: JSON.stringify({
+                        estado: encender
+                    })
 
-
-    const datos =
-        await respuesta.json();
+                }
+            );
 
 
-    if (!datos.ok) {
+        const datos =
+            await respuesta.json();
 
-        alert(datos.mensaje);
+
+        if (!datos.ok) {
+
+            alert(datos.mensaje);
+
+        }
+
+
+        await actualizarDatos();
 
     }
 
+    catch(error) {
 
-    await actualizarDatos();
+        console.error(error);
+
+        alert(
+            "No se pudo comunicar con el servidor."
+        );
+
+    }
 
 }
 
@@ -2382,14 +2308,12 @@ async function actualizarDatos() {
     try {
 
         const respuesta =
-            await fetch("/datos");
+            await api("/datos");
 
 
         const datos =
             await respuesta.json();
 
-
-        /* COMUNICACIÓN */
 
         const arduino =
             document.getElementById(
@@ -2451,8 +2375,6 @@ async function actualizarDatos() {
         }
 
 
-        /* SERVO */
-
         const servo =
             document.getElementById(
                 "estadoServo"
@@ -2496,8 +2418,6 @@ async function actualizarDatos() {
 
         }
 
-
-        /* LED */
 
         const led =
             document.getElementById(
@@ -2543,8 +2463,6 @@ async function actualizarDatos() {
         }
 
 
-        /* SEGURIDAD */
-
         accesoAutorizado =
             datos.acceso_autorizado;
 
@@ -2554,8 +2472,6 @@ async function actualizarDatos() {
 
         actualizarInterfazSeguridad();
 
-
-        /* MODO */
 
         const modo =
             document.getElementById(
@@ -2596,8 +2512,6 @@ async function actualizarDatos() {
             !accesoAutorizado;
 
 
-        /* ACTUADORES */
-
         const puedeControlar =
             accesoAutorizado &&
             modoForzado &&
@@ -2627,8 +2541,6 @@ async function actualizarDatos() {
         ).disabled =
             !puedeControlar;
 
-
-        /* IA */
 
         if (datos.analisis_ia) {
 
@@ -2687,8 +2599,6 @@ async function actualizarDatos() {
                 (ia.ultimo_ciclo || 0) +
                 " s";
 
-
-            /* ALARMA */
 
             const alarm =
                 document.getElementById(
@@ -2751,7 +2661,7 @@ async function cargarHistorial() {
     try {
 
         const respuesta =
-            await fetch(
+            await api(
                 "/historial"
             );
 
@@ -2857,8 +2767,6 @@ async function preguntarIA() {
         );
 
 
-    /* USUARIO */
-
     const usuario =
         document.createElement(
             "div"
@@ -2884,7 +2792,7 @@ async function preguntarIA() {
     try {
 
         const respuesta =
-            await fetch(
+            await api(
                 "/preguntar_ia",
                 {
                     method: "POST",
@@ -2975,4 +2883,3 @@ setInterval(
 </body>
 
 </html>
-
