@@ -1,0 +1,2978 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SCADA INDUSTRIAL | SISTEMA DE SUPERVISIÓN</title>
+
+<style>
+
+/* =========================================================
+   CONFIGURACIÓN GENERAL
+========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background:
+        radial-gradient(circle at top, #172027 0%, #080b0d 45%, #050607 100%);
+    color: #dce5e9;
+    min-height: 100vh;
+}
+
+button,
+input {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    background: #20282d !important;
+    color: #59656b !important;
+    border-color: #303a40 !important;
+    cursor: not-allowed;
+}
+
+/* =========================================================
+   BARRA SUPERIOR
+========================================================= */
+
+.topbar {
+    height: 70px;
+    background: #0b1013;
+    border-bottom: 1px solid #263238;
+    box-shadow: 0 4px 18px rgba(0,0,0,.45);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 28px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.logo-icon {
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid #455a64;
+    border-radius: 6px;
+
+    background: #121a1f;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 22px;
+
+    box-shadow: inset 0 0 12px rgba(255,255,255,.03);
+}
+
+.logo-text h1 {
+    font-size: 18px;
+    letter-spacing: 1.5px;
+    color: #f1f5f6;
+}
+
+.logo-text span {
+    display: block;
+    margin-top: 3px;
+
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    color: #78909c;
+}
+
+.top-status {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.system-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    font-size: 11px;
+    letter-spacing: .6px;
+}
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+    background: #607d8b;
+
+    box-shadow: 0 0 8px rgba(96,125,139,.3);
+}
+
+.status-dot.online {
+    background: #00c853;
+    box-shadow: 0 0 10px rgba(0,200,83,.7);
+}
+
+.user-box {
+    border-left: 1px solid #263238;
+    padding-left: 20px;
+
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: #90a4ae;
+}
+
+/* =========================================================
+   CONTENEDOR
+========================================================= */
+
+.container {
+    max-width: 1550px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* =========================================================
+   GRID PRINCIPAL
+========================================================= */
+
+.dashboard {
+    display: grid;
+
+    grid-template-columns:
+        250px
+        minmax(500px, 1fr)
+        310px;
+
+    gap: 16px;
+
+    align-items: start;
+}
+
+/* =========================================================
+   PANELES
+========================================================= */
+
+.panel {
+    background: rgba(13,18,21,.96);
+
+    border: 1px solid #263238;
+    border-radius: 7px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,.32),
+        inset 0 1px rgba(255,255,255,.015);
+}
+
+.panel-header {
+    min-height: 42px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #141c20,
+            #101518
+        );
+
+    border-bottom: 1px solid #263238;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 14px;
+
+    font-size: 10px;
+    font-weight: bold;
+
+    letter-spacing: 1px;
+    color: #cfd8dc;
+}
+
+.panel-code {
+    font-size: 8px;
+    color: #607d8b;
+    letter-spacing: 1px;
+}
+
+.panel-body {
+    padding: 13px;
+}
+
+/* =========================================================
+   INDICADORES
+========================================================= */
+
+.indicator {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 11px 8px;
+
+    border-bottom: 1px solid #1c2529;
+
+    font-size: 10px;
+
+    color: #b0bec5;
+}
+
+.indicator:last-child {
+    border-bottom: none;
+}
+
+.indicator-left {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.light {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #455a64;
+}
+
+.light.green {
+    background: #00c853;
+    box-shadow: 0 0 7px rgba(0,200,83,.65);
+}
+
+.light.red {
+    background: #ff1744;
+    box-shadow: 0 0 7px rgba(255,23,68,.55);
+}
+
+.light.yellow {
+    background: #ffd600;
+    box-shadow: 0 0 7px rgba(255,214,0,.55);
+}
+
+/* =========================================================
+   MODO
+========================================================= */
+
+.mode-display {
+    text-align: center;
+
+    padding: 17px 10px;
+
+    background: #090d0f;
+
+    border: 1px solid #263238;
+
+    border-radius: 5px;
+
+    margin-bottom: 12px;
+}
+
+.mode-label {
+    font-size: 8px;
+    color: #607d8b;
+
+    letter-spacing: 1.5px;
+
+    margin-bottom: 6px;
+}
+
+.mode-value {
+    font-size: 25px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.mode-local {
+    color: #b0bec5;
+}
+
+.mode-remote {
+    color: #29b6f6;
+    text-shadow: 0 0 8px rgba(41,182,246,.3);
+}
+
+.mode-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+}
+
+button {
+    border: 1px solid transparent;
+    border-radius: 4px;
+
+    padding: 9px 8px;
+
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: .5px;
+
+    transition: .15s;
+}
+
+button:hover:not(:disabled) {
+    filter: brightness(1.15);
+}
+
+.btn-local {
+    background: #37474f;
+    border-color: #546e7a;
+    color: white;
+}
+
+.btn-remote {
+    background: #075985;
+    border-color: #0288d1;
+    color: white;
+}
+
+/* =========================================================
+   SEGURIDAD
+========================================================= */
+
+.security {
+    text-align: center;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.lock {
+    font-size: 38px;
+    margin-bottom: 7px;
+}
+
+.security-state {
+    font-size: 9px;
+    font-weight: bold;
+
+    letter-spacing: .8px;
+
+    margin-bottom: 12px;
+}
+
+.security-locked {
+    color: #ff5252;
+}
+
+.security-open {
+    color: #00e676;
+}
+
+.btn-security {
+    width: 100%;
+
+    background: #263238;
+    border-color: #455a64;
+
+    color: #eceff1;
+}
+
+/* =========================================================
+   PROCESO
+========================================================= */
+
+.process {
+    min-height: 390px;
+}
+
+.process-area {
+    height: 320px;
+
+    position: relative;
+
+    background:
+        linear-gradient(
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        ),
+        #080c0e;
+
+    background-size: 25px 25px;
+
+    border: 1px solid #263238;
+    border-radius: 5px;
+
+    overflow: hidden;
+}
+
+/* línea de proceso */
+
+.process-line {
+    position: absolute;
+
+    left: 12%;
+    right: 12%;
+
+    top: 50%;
+
+    height: 5px;
+
+    background: #455a64;
+
+    box-shadow:
+        0 0 7px rgba(84,110,122,.3);
+}
+
+/* equipos */
+
+.machine {
+    position: absolute;
+
+    top: 38%;
+
+    width: 120px;
+    height: 84px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #1a2328,
+            #101519
+        );
+
+    border: 2px solid #546e7a;
+
+    border-radius: 6px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,.45);
+}
+
+.machine-title {
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: .5px;
+}
+
+.machine-state {
+    margin-top: 7px;
+
+    font-size: 9px;
+    color: #607d8b;
+}
+
+.machine.servo {
+    left: 7%;
+}
+
+.machine.led {
+    right: 7%;
+}
+
+/* flechas */
+
+.arrow {
+    position: absolute;
+
+    top: 46%;
+
+    font-size: 23px;
+
+    color: #607d8b;
+}
+
+.arrow.one {
+    left: 31%;
+}
+
+.arrow.two {
+    right: 31%;
+}
+
+/* =========================================================
+   KPI
+========================================================= */
+
+.kpis {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 9px;
+
+    margin-top: 10px;
+}
+
+.kpi {
+    background: #090d0f;
+
+    border: 1px solid #263238;
+
+    border-radius: 4px;
+
+    padding: 13px;
+
+    text-align: center;
+}
+
+.kpi-title {
+    font-size: 8px;
+
+    color: #607d8b;
+
+    letter-spacing: 1px;
+}
+
+.kpi-value {
+    font-size: 20px;
+
+    font-weight: bold;
+
+    margin-top: 5px;
+
+    color: #eceff1;
+}
+
+/* =========================================================
+   ACTUADORES
+========================================================= */
+
+.actuator {
+    border: 1px solid #263238;
+
+    border-radius: 5px;
+
+    margin-bottom: 10px;
+
+    overflow: hidden;
+
+    background: #0a0f11;
+}
+
+.actuator:last-child {
+    margin-bottom: 0;
+}
+
+.actuator-head {
+    background: #151d21;
+
+    padding: 9px 10px;
+
+    font-size: 9px;
+    font-weight: bold;
+
+    letter-spacing: .7px;
+
+    color: #b0bec5;
+}
+
+.actuator-body {
+    padding: 11px;
+}
+
+.actuator-state {
+    display: flex;
+    justify-content: space-between;
+
+    font-size: 10px;
+
+    margin-bottom: 9px;
+
+    color: #90a4ae;
+}
+
+.actuator-buttons {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 5px;
+}
+
+.btn-on {
+    background: #075e35;
+    border-color: #00a152;
+    color: white;
+}
+
+.btn-off {
+    background: #7b1727;
+    border-color: #d32f45;
+    color: white;
+}
+
+/* =========================================================
+   ALARMAS
+========================================================= */
+
+.alarm {
+    padding: 11px;
+
+    background: #0a120e;
+
+    border: 1px solid #263238;
+
+    border-left: 4px solid #00c853;
+
+    border-radius: 3px;
+
+    font-size: 10px;
+}
+
+.alarm.warning {
+    border-left-color: #ffd600;
+    background: #141208;
+}
+
+.alarm.danger {
+    border-left-color: #ff1744;
+    background: #16090d;
+}
+
+.alarm-title {
+    font-weight: bold;
+    color: #cfd8dc;
+}
+
+.alarm-text {
+    margin-top: 4px;
+    color: #78909c;
+}
+
+/* =========================================================
+   IA
+========================================================= */
+
+.ai-status {
+    padding: 11px;
+
+    background: #080d10;
+
+    border: 1px solid #263238;
+
+    border-radius: 4px;
+
+    margin-bottom: 10px;
+}
+
+.ai-row {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 7px 0;
+
+    font-size: 9px;
+
+    border-bottom: 1px solid #1b2529;
+
+    color: #90a4ae;
+}
+
+.ai-row:last-child {
+    border-bottom: none;
+}
+
+.ai-value {
+    font-weight: bold;
+    color: #29b6f6;
+}
+
+.ai-diagnosis {
+    font-size: 9px;
+    line-height: 1.55;
+
+    color: #b0bec5;
+}
+
+.ai-diagnosis strong {
+    color: #eceff1;
+    letter-spacing: .5px;
+}
+
+/* =========================================================
+   CHAT IA
+========================================================= */
+
+.chat {
+    height: 190px;
+
+    overflow-y: auto;
+
+    border: 1px solid #263238;
+
+    border-radius: 4px;
+
+    background: #070b0d;
+
+    padding: 9px;
+
+    margin-bottom: 8px;
+}
+
+.message {
+    padding: 8px;
+
+    margin-bottom: 7px;
+
+    border-radius: 5px;
+
+    font-size: 9px;
+
+    line-height: 1.45;
+}
+
+.message.ai {
+    background: #111a1f;
+
+    border-left: 3px solid #0288d1;
+
+    color: #cfd8dc;
+}
+
+.message.user {
+    background: #10202b;
+
+    border-right: 3px solid #0288d1;
+
+    text-align: right;
+
+    color: #b3e5fc;
+}
+
+.chat-input {
+    display: flex;
+    gap: 5px;
+}
+
+.chat-input input {
+    flex: 1;
+
+    min-width: 0;
+
+    border: 1px solid #37474f;
+
+    border-radius: 4px;
+
+    background: #080c0e;
+
+    color: #eceff1;
+
+    padding: 9px;
+
+    font-size: 9px;
+
+    outline: none;
+}
+
+.chat-input input:focus {
+    border-color: #0288d1;
+
+    box-shadow:
+        0 0 0 1px rgba(2,136,209,.2);
+}
+
+.chat-input input::placeholder {
+    color: #546e7a;
+}
+
+.btn-send {
+    background: #075985;
+    border-color: #0288d1;
+
+    color: white;
+
+    padding-left: 13px;
+    padding-right: 13px;
+}
+
+/* =========================================================
+   HISTORIAL
+========================================================= */
+
+.history {
+    margin-top: 16px;
+}
+
+.history-container {
+    max-height: 230px;
+    overflow-y: auto;
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    font-size: 9px;
+}
+
+th {
+    background: #151d21;
+
+    color: #90a4ae;
+
+    padding: 9px;
+
+    text-align: left;
+
+    position: sticky;
+    top: 0;
+
+    border-bottom: 1px solid #263238;
+
+    letter-spacing: .5px;
+}
+
+td {
+    padding: 8px;
+
+    color: #b0bec5;
+
+    border-bottom: 1px solid #182126;
+}
+
+tr:hover td {
+    background: #10181c;
+}
+
+/* =========================================================
+   MODALES
+========================================================= */
+
+.modal {
+    display: none;
+
+    position: fixed;
+
+    z-index: 999;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0,0,0,.78);
+
+    align-items: center;
+    justify-content: center;
+
+    backdrop-filter: blur(3px);
+}
+
+.modal-box {
+    width: 390px;
+    max-width: 90%;
+
+    background: #101619;
+
+    border: 1px solid #37474f;
+
+    border-radius: 7px;
+
+    box-shadow:
+        0 15px 50px rgba(0,0,0,.65);
+
+    padding: 24px;
+}
+
+.modal-box h2 {
+    font-size: 17px;
+
+    color: #eceff1;
+
+    margin-bottom: 8px;
+}
+
+.modal-box p {
+    font-size: 10px;
+
+    line-height: 1.5;
+
+    color: #78909c;
+
+    margin-bottom: 14px;
+}
+
+.modal-box input {
+    width: 100%;
+
+    padding: 11px;
+
+    border: 1px solid #455a64;
+
+    border-radius: 4px;
+
+    background: #080c0e;
+
+    color: white;
+
+    margin-bottom: 14px;
+
+    outline: none;
+}
+
+.modal-box input:focus {
+    border-color: #0288d1;
+}
+
+.modal-buttons {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 6px;
+}
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: #080b0d;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #37474f;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #546e7a;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1150px) {
+
+    .dashboard {
+        grid-template-columns: 220px 1fr;
+    }
+
+    .dashboard > div:nth-child(3) {
+        grid-column: 1 / -1;
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 15px;
+    }
+
+}
+
+@media(max-width:850px) {
+
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard > div:nth-child(3) {
+        grid-column: auto;
+
+        display: block;
+    }
+
+    .topbar {
+        padding: 0 15px;
+    }
+
+    .user-box {
+        display: none;
+    }
+
+    .process-area {
+        height: 280px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =======================================================
+     BARRA SUPERIOR
+======================================================== -->
+
+<header class="topbar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            ⚙
+        </div>
+
+        <div class="logo-text">
+
+            <h1>SCADA INDUSTRIAL</h1>
+
+            <span>
+                SISTEMA DE SUPERVISIÓN Y CONTROL
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="top-status">
+
+        <div class="system-status">
+
+            <div
+                id="statusDot"
+                class="status-dot">
+            </div>
+
+            <span id="topStatus">
+                SISTEMA DESCONECTADO
+            </span>
+
+        </div>
+
+
+        <div class="user-box">
+            OPERADOR
+        </div>
+
+    </div>
+
+</header>
+
+
+<div class="container">
+
+<div class="dashboard">
+
+
+<!-- =======================================================
+     COLUMNA IZQUIERDA
+======================================================== -->
+
+<div>
+
+
+<!-- COMUNICACIÓN -->
+
+<div class="panel">
+
+<div class="panel-header">
+
+    COMUNICACIÓN
+
+    <span class="panel-code">
+        COM-01
+    </span>
+
+</div>
+
+
+<div class="panel-body">
+
+    <div class="indicator">
+
+        <div class="indicator-left">
+
+            <div
+                id="arduinoLight"
+                class="light">
+            </div>
+
+            Arduino
+
+        </div>
+
+        <span id="arduinoEstado">
+            ---
+        </span>
+
+    </div>
+
+
+    <div class="indicator">
+
+        <div class="indicator-left">
+
+            <div class="light green"></div>
+
+            Puerto
+
+        </div>
+
+        <span>
+            COM3
+        </span>
+
+    </div>
+
+
+    <div class="indicator">
+
+        <div class="indicator-left">
+
+            <div class="light green"></div>
+
+            Velocidad
+
+        </div>
+
+        <span>
+            9600
+        </span>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<br>
+
+
+<!-- MODO -->
+
+<div class="panel">
+
+<div class="panel-header">
+
+    MODO DE OPERACIÓN
+
+    <span class="panel-code">
+        MOD-01
+    </span>
+
+</div>
+
+
+<div class="panel-body">
+
+
+<div class="mode-display">
+
+<div class="mode-label">
+    MODO ACTUAL
+</div>
+
+<div
+    id="modoActual"
+    class="mode-value mode-local">
+
+    LOCAL
+
+</div>
+
+</div>
+
+
+<div class="mode-buttons">
+
+<button
+    id="btnLocal"
+    class="btn-local"
+    onclick="cambiarModo(false)">
+
+    LOCAL
+
+</button>
+
+
+<button
+    id="btnRemoto"
+    class="btn-remote"
+    onclick="cambiarModo(true)">
+
+    REMOTO
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<br>
+
+
+<!-- SEGURIDAD -->
+
+<div class="panel">
+
+<div class="panel-header">
+
+    SEGURIDAD
+
+    <span class="panel-code">
+        SEC-01
+    </span>
+
+</div>
+
+
+<div class="panel-body security">
+
+
+<div
+    id="candado"
+    class="lock">
+
+    🔒
+
+</div>
+
+
+<div
+    id="estadoSeguridad"
+    class="security-state security-locked">
+
+    ACCESO BLOQUEADO
+
+</div>
+
+
+<button
+    id="btnCandado"
+    class="btn-security"
+    onclick="gestionarCandado()">
+
+    AUTORIZAR
+
+</button>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<!-- =======================================================
+     COLUMNA CENTRAL
+======================================================== -->
+
+<div>
+
+
+<!-- PROCESO -->
+
+<div class="panel process">
+
+<div class="panel-header">
+
+    VISTA GENERAL DEL PROCESO
+
+    <span class="panel-code">
+        PROC-01
+    </span>
+
+</div>
+
+
+<div class="panel-body">
+
+<div class="process-area">
+
+
+<div class="process-line"></div>
+
+
+<div class="machine servo">
+
+    <div class="machine-title">
+        SERVOMOTOR
+    </div>
+
+    <div
+        id="processServo"
+        class="machine-state">
+
+        APAGADO
+
+    </div>
+
+</div>
+
+
+<div class="arrow one">
+    →
+</div>
+
+
+<div class="arrow two">
+    →
+</div>
+
+
+<div class="machine led">
+
+    <div class="machine-title">
+        LED
+    </div>
+
+    <div
+        id="processLed"
+        class="machine-state">
+
+        APAGADO
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+<div class="kpis">
+
+
+<div class="kpi">
+
+<div class="kpi-title">
+    CICLOS
+</div>
+
+<div
+    id="ciclos"
+    class="kpi-value">
+
+    0
+
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div class="kpi-title">
+    TIEMPO PROMEDIO
+</div>
+
+<div
+    id="promedio"
+    class="kpi-value">
+
+    0 s
+
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div class="kpi-title">
+    ÚLTIMO CICLO
+</div>
+
+<div
+    id="ultimoCiclo"
+    class="kpi-value">
+
+    0 s
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+<br>
+
+
+<!-- ACTUADORES -->
+
+<div class="panel">
+
+<div class="panel-header">
+
+    CONTROL DE ACTUADORES
+
+    <span class="panel-code">
+        ACT-01
+    </span>
+
+</div>
+
+
+<div class="panel-body">
+
+
+<div class="actuator">
+
+<div class="actuator-head">
+    SERVOMOTOR
+</div>
+
+<div class="actuator-body">
+
+
+<div class="actuator-state">
+
+<span>
+    Estado
+</span>
+
+<span
+    id="estadoServo">
+
+    APAGADO
+
+</span>
+
+</div>
+
+
+<div class="actuator-buttons">
+
+<button
+    id="servoOn"
+    class="btn-on"
+    onclick="controlServo(true)">
+
+    ON
+
+</button>
+
+<button
+    id="servoOff"
+    class="btn-off"
+    onclick="controlServo(false)">
+
+    OFF
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="actuator">
+
+<div class="actuator-head">
+    LED
+</div>
+
+<div class="actuator-body">
+
+
+<div class="actuator-state">
+
+<span>
+    Estado
+</span>
+
+<span
+    id="estadoLed">
+
+    APAGADO
+
+</span>
+
+</div>
+
+
+<div class="actuator-buttons">
+
+<button
+    id="ledOn"
+    class="btn-on"
+    onclick="controlLed(true)">
+
+    ON
+
+</button>
+
+<button
+    id="ledOff"
+    class="btn-off"
+    onclick="controlLed(false)">
+
+    OFF
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- HISTORIAL -->
+
+<div class="panel history">
+
+<div class="panel-header">
+
+    HISTORIAL DE EVENTOS
+
+    <span class="panel-code">
+        LOG-01
+    </span>
+
+</div>
+
+
+<div class="panel-body history-container">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>FECHA</th>
+<th>HORA</th>
+<th>EQUIPO</th>
+<th>EVENTO</th>
+<th>DURACIÓN</th>
+<th>MODO</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="historialBody">
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<!-- =======================================================
+     COLUMNA DERECHA
+======================================================== -->
+
+<div>
+
+
+<!-- ALARMAS -->
+
+<div class="panel">
+
+<div class="panel-header">
+
+    ALARMAS
+
+    <span class="panel-code">
+        ALM-01
+    </span>
+
+</div>
+
+
+<div class="panel-body">
+
+<div
+    id="alarmBox"
+    class="alarm">
+
+<div class="alarm-title">
+    SISTEMA
+</div>
+
+<div
+    id="alarmText"
+    class="alarm-text">
+
+    Sin alarmas activas
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<br>
+
+
+<!-- IA -->
+
+<div class="panel">
+
+<div class="panel-header">
+
+    ANÁLISIS INTELIGENTE
+
+    <span class="panel-code">
+        IA-01
+    </span>
+
+</div>
+
+
+<div class="panel-body">
+
+
+<div class="ai-status">
+
+
+<div class="ai-row">
+
+<span>
+    Estado
+</span>
+
+<span
+    id="iaEstado"
+    class="ai-value">
+
+    ---
+
+</span>
+
+</div>
+
+
+<div class="ai-row">
+
+<span>
+    Riesgo
+</span>
+
+<span
+    id="iaRiesgo"
+    class="ai-value">
+
+    ---
+
+</span>
+
+</div>
+
+
+<div class="ai-row">
+
+<span>
+    Tendencia
+</span>
+
+<span
+    id="iaTendencia"
+    class="ai-value">
+
+    ---
+
+</span>
+
+</div>
+
+</div>
+
+
+<div class="ai-diagnosis">
+
+<strong>
+    DIAGNÓSTICO
+</strong>
+
+<div
+    id="iaDiagnostico"
+    style="margin-top:5px">
+
+    Esperando datos...
+
+</div>
+
+<br>
+
+<strong>
+    RECOMENDACIÓN
+</strong>
+
+<div
+    id="iaRecomendacion"
+    style="margin-top:5px">
+
+    Esperando datos...
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<br>
+
+
+<!-- CHAT IA -->
+
+<div class="panel">
+
+<div class="panel-header">
+
+    ASISTENTE IA
+
+    <span class="panel-code">
+        IA-02
+    </span>
+
+</div>
+
+
+<div class="panel-body">
+
+
+<div
+    id="chatBox"
+    class="chat">
+
+<div class="message ai">
+
+🤖 Sistema IA iniciado.<br>
+Podés consultar información sobre el proceso, estados, ciclos, tiempos y funcionamiento del sistema.
+
+</div>
+
+</div>
+
+
+<div class="chat-input">
+
+<input
+    type="text"
+    id="pregunta"
+    placeholder="Escribí una pregunta..."
+    onkeydown="if(event.key==='Enter') preguntarIA()">
+
+
+<button
+    class="btn-send"
+    onclick="preguntarIA()">
+
+    ENVIAR
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- =======================================================
+     MODAL CREAR CONTRASEÑA
+======================================================== -->
+
+<div
+    id="modalCrear"
+    class="modal">
+
+<div class="modal-box">
+
+<h2>
+    🔐 Crear contraseña
+</h2>
+
+<p>
+    Esta contraseña protegerá el acceso al modo remoto.
+</p>
+
+<input
+    type="password"
+    id="nuevaContrasena"
+    placeholder="Nueva contraseña">
+
+
+<div class="modal-buttons">
+
+<button
+    class="btn-off"
+    onclick="cerrarModal('modalCrear')">
+
+    CANCELAR
+
+</button>
+
+
+<button
+    class="btn-on"
+    onclick="crearContrasena()">
+
+    CREAR
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =======================================================
+     MODAL ACCESO
+======================================================== -->
+
+<div
+    id="modalAcceso"
+    class="modal">
+
+<div class="modal-box">
+
+<h2>
+    🔐 Autorización de operador
+</h2>
+
+<p>
+    Ingresá la contraseña para habilitar el acceso remoto.
+</p>
+
+<input
+    type="password"
+    id="contrasena"
+    placeholder="Contraseña">
+
+
+<div class="modal-buttons">
+
+<button
+    class="btn-off"
+    onclick="cerrarModal('modalAcceso')">
+
+    CANCELAR
+
+</button>
+
+
+<button
+    class="btn-on"
+    onclick="autorizar()">
+
+    INGRESAR
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+let accesoAutorizado = false;
+
+let modoForzado = false;
+
+
+/* =========================================================
+   MODALES
+========================================================= */
+
+function abrirModal(id) {
+
+    document.getElementById(id).style.display = "flex";
+
+}
+
+
+function cerrarModal(id) {
+
+    document.getElementById(id).style.display = "none";
+
+}
+
+
+/* =========================================================
+   SEGURIDAD
+========================================================= */
+
+function actualizarInterfazSeguridad() {
+
+    const candado =
+        document.getElementById("candado");
+
+    const texto =
+        document.getElementById("estadoSeguridad");
+
+    const boton =
+        document.getElementById("btnCandado");
+
+
+    if (accesoAutorizado) {
+
+        candado.innerHTML = "🔓";
+
+        texto.innerHTML =
+            "ACCESO AUTORIZADO";
+
+        texto.className =
+            "security-state security-open";
+
+        boton.innerHTML =
+            "BLOQUEAR";
+
+    }
+
+    else {
+
+        candado.innerHTML = "🔒";
+
+        texto.innerHTML =
+            "ACCESO BLOQUEADO";
+
+        texto.className =
+            "security-state security-locked";
+
+        boton.innerHTML =
+            "AUTORIZAR";
+
+    }
+
+}
+
+
+/* =========================================================
+   CANDADO
+========================================================= */
+
+async function gestionarCandado() {
+
+    const respuesta =
+        await fetch("/datos");
+
+    const datos =
+        await respuesta.json();
+
+
+    if (!datos.contrasena_creada) {
+
+        abrirModal("modalCrear");
+
+        return;
+
+    }
+
+
+    if (!datos.acceso_autorizado) {
+
+        abrirModal("modalAcceso");
+
+        return;
+
+    }
+
+
+    await fetch(
+        "/cerrar_acceso",
+        {
+            method: "POST"
+        }
+    );
+
+
+    accesoAutorizado = false;
+
+    modoForzado = false;
+
+    actualizarInterfazSeguridad();
+
+    actualizarDatos();
+
+}
+
+
+/* =========================================================
+   CREAR CONTRASEÑA
+========================================================= */
+
+async function crearContrasena() {
+
+    const password =
+        document.getElementById(
+            "nuevaContrasena"
+        ).value;
+
+
+    if (password.length < 4) {
+
+        alert(
+            "La contraseña debe tener al menos 4 caracteres."
+        );
+
+        return;
+
+    }
+
+
+    const respuesta =
+        await fetch(
+            "/crear_contrasena",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+                    contrasena: password
+                })
+
+            }
+        );
+
+
+    const datos =
+        await respuesta.json();
+
+
+    if (datos.ok) {
+
+        alert(
+            "Contraseña creada correctamente."
+        );
+
+        cerrarModal("modalCrear");
+
+        document.getElementById(
+            "nuevaContrasena"
+        ).value = "";
+
+    }
+
+    else {
+
+        alert(datos.mensaje);
+
+    }
+
+}
+
+
+/* =========================================================
+   AUTORIZAR
+========================================================= */
+
+async function autorizar() {
+
+    const password =
+        document.getElementById(
+            "contrasena"
+        ).value;
+
+
+    if (!password) {
+
+        alert(
+            "Ingresá la contraseña."
+        );
+
+        return;
+
+    }
+
+
+    const respuesta =
+        await fetch(
+            "/autorizar",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+                    contrasena: password
+                })
+
+            }
+        );
+
+
+    const datos =
+        await respuesta.json();
+
+
+    if (datos.ok) {
+
+        accesoAutorizado = true;
+
+        cerrarModal("modalAcceso");
+
+        document.getElementById(
+            "contrasena"
+        ).value = "";
+
+        actualizarInterfazSeguridad();
+
+        await actualizarDatos();
+
+        alert(
+            "Acceso autorizado."
+        );
+
+    }
+
+    else {
+
+        alert(datos.mensaje);
+
+    }
+
+}
+
+
+/* =========================================================
+   CAMBIAR MODO
+========================================================= */
+
+async function cambiarModo(remoto) {
+
+    if (
+        remoto &&
+        !accesoAutorizado
+    ) {
+
+        abrirModal("modalAcceso");
+
+        return;
+
+    }
+
+
+    const respuesta =
+        await fetch(
+            "/modo",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+                    modo: remoto
+                })
+
+            }
+        );
+
+
+    const datos =
+        await respuesta.json();
+
+
+    if (!datos.ok) {
+
+        alert(datos.mensaje);
+
+        return;
+
+    }
+
+
+    modoForzado = remoto;
+
+
+    if (!remoto) {
+
+        accesoAutorizado = false;
+
+        actualizarInterfazSeguridad();
+
+    }
+
+
+    await actualizarDatos();
+
+}
+
+
+/* =========================================================
+   CONTROL SERVO
+========================================================= */
+
+async function controlServo(encender) {
+
+    if (
+        !accesoAutorizado ||
+        !modoForzado
+    ) {
+
+        alert(
+            "Debe estar autorizado y en modo REMOTO."
+        );
+
+        return;
+
+    }
+
+
+    const respuesta =
+        await fetch(
+            "/control_servo",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+                    estado: encender
+                })
+
+            }
+        );
+
+
+    const datos =
+        await respuesta.json();
+
+
+    if (!datos.ok) {
+
+        alert(datos.mensaje);
+
+    }
+
+
+    await actualizarDatos();
+
+}
+
+
+/* =========================================================
+   CONTROL LED
+========================================================= */
+
+async function controlLed(encender) {
+
+    if (
+        !accesoAutorizado ||
+        !modoForzado
+    ) {
+
+        alert(
+            "Debe estar autorizado y en modo REMOTO."
+        );
+
+        return;
+
+    }
+
+
+    const respuesta =
+        await fetch(
+            "/control_led",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+                    estado: encender
+                })
+
+            }
+        );
+
+
+    const datos =
+        await respuesta.json();
+
+
+    if (!datos.ok) {
+
+        alert(datos.mensaje);
+
+    }
+
+
+    await actualizarDatos();
+
+}
+
+
+/* =========================================================
+   ACTUALIZAR DATOS
+========================================================= */
+
+async function actualizarDatos() {
+
+    try {
+
+        const respuesta =
+            await fetch("/datos");
+
+
+        const datos =
+            await respuesta.json();
+
+
+        /* COMUNICACIÓN */
+
+        const arduino =
+            document.getElementById(
+                "arduinoEstado"
+            );
+
+        const light =
+            document.getElementById(
+                "arduinoLight"
+            );
+
+        const dot =
+            document.getElementById(
+                "statusDot"
+            );
+
+        const top =
+            document.getElementById(
+                "topStatus"
+            );
+
+
+        if (datos.arduino_conectado) {
+
+            arduino.innerHTML =
+                "CONECTADO";
+
+            arduino.style.color =
+                "#00e676";
+
+            light.className =
+                "light green";
+
+            dot.className =
+                "status-dot online";
+
+            top.innerHTML =
+                "SISTEMA ONLINE";
+
+        }
+
+        else {
+
+            arduino.innerHTML =
+                "DESCONECTADO";
+
+            arduino.style.color =
+                "#ff5252";
+
+            light.className =
+                "light red";
+
+            dot.className =
+                "status-dot";
+
+            top.innerHTML =
+                "SISTEMA DESCONECTADO";
+
+        }
+
+
+        /* SERVO */
+
+        const servo =
+            document.getElementById(
+                "estadoServo"
+            );
+
+        const processServo =
+            document.getElementById(
+                "processServo"
+            );
+
+
+        if (datos.estado_servo) {
+
+            servo.innerHTML =
+                "ENCENDIDO";
+
+            servo.style.color =
+                "#00e676";
+
+            processServo.innerHTML =
+                "ENCENDIDO";
+
+            processServo.style.color =
+                "#00e676";
+
+        }
+
+        else {
+
+            servo.innerHTML =
+                "APAGADO";
+
+            servo.style.color =
+                "#78909c";
+
+            processServo.innerHTML =
+                "APAGADO";
+
+            processServo.style.color =
+                "#78909c";
+
+        }
+
+
+        /* LED */
+
+        const led =
+            document.getElementById(
+                "estadoLed"
+            );
+
+        const processLed =
+            document.getElementById(
+                "processLed"
+            );
+
+
+        if (datos.estado_led) {
+
+            led.innerHTML =
+                "ENCENDIDO";
+
+            led.style.color =
+                "#00e676";
+
+            processLed.innerHTML =
+                "ENCENDIDO";
+
+            processLed.style.color =
+                "#00e676";
+
+        }
+
+        else {
+
+            led.innerHTML =
+                "APAGADO";
+
+            led.style.color =
+                "#78909c";
+
+            processLed.innerHTML =
+                "APAGADO";
+
+            processLed.style.color =
+                "#78909c";
+
+        }
+
+
+        /* SEGURIDAD */
+
+        accesoAutorizado =
+            datos.acceso_autorizado;
+
+        modoForzado =
+            datos.modo_forzado;
+
+
+        actualizarInterfazSeguridad();
+
+
+        /* MODO */
+
+        const modo =
+            document.getElementById(
+                "modoActual"
+            );
+
+
+        if (modoForzado) {
+
+            modo.innerHTML =
+                "REMOTO";
+
+            modo.className =
+                "mode-value mode-remote";
+
+        }
+
+        else {
+
+            modo.innerHTML =
+                "LOCAL";
+
+            modo.className =
+                "mode-value mode-local";
+
+        }
+
+
+        document.getElementById(
+            "btnRemoto"
+        ).disabled =
+            !accesoAutorizado;
+
+
+        document.getElementById(
+            "btnLocal"
+        ).disabled =
+            !accesoAutorizado;
+
+
+        /* ACTUADORES */
+
+        const puedeControlar =
+            accesoAutorizado &&
+            modoForzado &&
+            datos.arduino_conectado;
+
+
+        document.getElementById(
+            "servoOn"
+        ).disabled =
+            !puedeControlar;
+
+
+        document.getElementById(
+            "servoOff"
+        ).disabled =
+            !puedeControlar;
+
+
+        document.getElementById(
+            "ledOn"
+        ).disabled =
+            !puedeControlar;
+
+
+        document.getElementById(
+            "ledOff"
+        ).disabled =
+            !puedeControlar;
+
+
+        /* IA */
+
+        if (datos.analisis_ia) {
+
+            const ia =
+                datos.analisis_ia;
+
+
+            document.getElementById(
+                "iaEstado"
+            ).innerHTML =
+                ia.estado || "---";
+
+
+            document.getElementById(
+                "iaRiesgo"
+            ).innerHTML =
+                ia.riesgo || "---";
+
+
+            document.getElementById(
+                "iaTendencia"
+            ).innerHTML =
+                ia.tendencia || "---";
+
+
+            document.getElementById(
+                "iaDiagnostico"
+            ).innerHTML =
+                ia.diagnostico ||
+                "Sin diagnóstico.";
+
+
+            document.getElementById(
+                "iaRecomendacion"
+            ).innerHTML =
+                ia.recomendacion ||
+                "Sin recomendaciones.";
+
+
+            document.getElementById(
+                "ciclos"
+            ).innerHTML =
+                ia.ciclos || 0;
+
+
+            document.getElementById(
+                "promedio"
+            ).innerHTML =
+                (ia.promedio || 0) +
+                " s";
+
+
+            document.getElementById(
+                "ultimoCiclo"
+            ).innerHTML =
+                (ia.ultimo_ciclo || 0) +
+                " s";
+
+
+            /* ALARMA */
+
+            const alarm =
+                document.getElementById(
+                    "alarmBox"
+                );
+
+            const alarmText =
+                document.getElementById(
+                    "alarmText"
+                );
+
+
+            if (
+                ia.anomalia === true
+            ) {
+
+                alarm.className =
+                    "alarm danger";
+
+                alarmText.innerHTML =
+                    "Anomalía detectada por el sistema IA.";
+
+            }
+
+            else {
+
+                alarm.className =
+                    "alarm";
+
+                alarmText.innerHTML =
+                    "Sin alarmas activas.";
+
+            }
+
+        }
+
+
+        cargarHistorial();
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "Error actualizando SCADA:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   HISTORIAL
+========================================================= */
+
+async function cargarHistorial() {
+
+    try {
+
+        const respuesta =
+            await fetch(
+                "/historial"
+            );
+
+
+        const datos =
+            await respuesta.json();
+
+
+        const tbody =
+            document.getElementById(
+                "historialBody"
+            );
+
+
+        tbody.innerHTML = "";
+
+
+        datos.forEach(
+            registro => {
+
+                const fila =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                fila.innerHTML = `
+
+                    <td>
+                        ${registro.fecha || ""}
+                    </td>
+
+                    <td>
+                        ${registro.hora || ""}
+                    </td>
+
+                    <td>
+                        ${registro.equipo || ""}
+                    </td>
+
+                    <td>
+                        ${registro.evento || ""}
+                    </td>
+
+                    <td>
+                        ${registro.duracion || ""}
+                    </td>
+
+                    <td>
+                        ${registro.modo || ""}
+                    </td>
+
+                `;
+
+
+                tbody.appendChild(
+                    fila
+                );
+
+            }
+        );
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "Error historial:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   CHAT IA
+========================================================= */
+
+async function preguntarIA() {
+
+    const input =
+        document.getElementById(
+            "pregunta"
+        );
+
+
+    const pregunta =
+        input.value.trim();
+
+
+    if (!pregunta) {
+
+        return;
+
+    }
+
+
+    const chat =
+        document.getElementById(
+            "chatBox"
+        );
+
+
+    /* USUARIO */
+
+    const usuario =
+        document.createElement(
+            "div"
+        );
+
+
+    usuario.className =
+        "message user";
+
+
+    usuario.innerHTML =
+        pregunta;
+
+
+    chat.appendChild(
+        usuario
+    );
+
+
+    input.value = "";
+
+
+    try {
+
+        const respuesta =
+            await fetch(
+                "/preguntar_ia",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        pregunta: pregunta
+                    })
+
+                }
+            );
+
+
+        const datos =
+            await respuesta.json();
+
+
+        const ia =
+            document.createElement(
+                "div"
+            );
+
+
+        ia.className =
+            "message ai";
+
+
+        ia.innerHTML =
+            datos.respuesta ||
+            "No se recibió respuesta.";
+
+
+        chat.appendChild(
+            ia
+        );
+
+
+        chat.scrollTop =
+            chat.scrollHeight;
+
+    }
+
+    catch(error) {
+
+        console.error(error);
+
+        const ia =
+            document.createElement(
+                "div"
+            );
+
+
+        ia.className =
+            "message ai";
+
+
+        ia.innerHTML =
+            "Error comunicando con el sistema IA.";
+
+
+        chat.appendChild(
+            ia
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   INICIO
+========================================================= */
+
+actualizarDatos();
+
+
+setInterval(
+    actualizarDatos,
+    1000
+);
+
+</script>
+
+</body>
+
+</html>
+
