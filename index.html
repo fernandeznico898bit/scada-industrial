@@ -1705,8 +1705,7 @@ tr:hover td {
    NO MODIFICAR EL TÚNEL
 ========================================================= */
 
-const API_BASE = "https://constant-monetary-unsettled.ngrok-free.dev";
-
+const API_BASE = "https://constant-monetary-unsettled.ngrok-free.dev"
 
 /* =========================================================
    ESTADO LOCAL DE LA INTERFAZ
@@ -1722,6 +1721,11 @@ let ultimaCargaHistorial = 0;
 ========================================================= */
 
 async function api(url, options = {}) {
+
+    if (!options.headers) {
+        options.headers = {};
+    }
+    options.headers["ngrok-skip-browser-warning"] = "true";
 
     const respuesta = await fetch(
         API_BASE + url,
